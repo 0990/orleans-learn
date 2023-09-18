@@ -10,5 +10,9 @@ type IGrainContext interface {
 	ActivationId() IDs.ActivationId
 
 	ReceiveMessage(message Message.Message)
+
 	Activate()
+	Deactivate(reason string)
+
+	Post(f func()) //debug only
 }

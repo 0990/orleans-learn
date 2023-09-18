@@ -41,3 +41,13 @@ func (l *List[k]) Len() int {
 func (l *List[k]) Remove(e *list.Element) k {
 	return l.List.Remove(e).(k)
 }
+
+func (l *List[k]) Range(f func(k)) {
+	for e := l.List.Front(); e != nil; e = e.Next() {
+		f(e.Value.(k))
+	}
+}
+
+func (l *List[k]) Clear() {
+	l.List.Init()
+}

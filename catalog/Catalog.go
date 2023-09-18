@@ -30,6 +30,10 @@ func NewCatalog() *Catalog {
 	return c
 }
 
+func (c *Catalog) Init(mc *MessageCenter) {
+	c._shared.InternalGrainRuntime.MessageCenter = mc
+}
+
 func (c *Catalog) GetOrCreateActivation(grainId IDs.GrainId) (core.IGrainContext, bool) {
 	result, ok := c.TryGetGrainContext(grainId)
 	if ok {
@@ -45,16 +49,17 @@ func (c *Catalog) GetOrCreateActivation(grainId IDs.GrainId) (core.IGrainContext
 	var address = IDs.NewGrainAddress(grainId, IDs.NewActivationId())
 	//result = c.grainActivator.CreateInstance(address)
 
-	result = NewActivationData(address, c._shared)
-	c.RegisterMessageTarget(result)
+	ad := NewActivationData(address, c._shared)
+	c.RegisterMessageTarget(ad)
 	c.lock.Unlock()
 
-	if result == nil {
+	if ad == nil {
 		return nil, false
 	}
 
-	result.Activate()
-	return result, true
+	ad.SetGrainInstance(CreateNewGrainInstance())
+	ad.Activate()
+	return ad, true
 }
 
 func (c *Catalog) TryGetGrainContext(grainId IDs.GrainId) (core.IGrainContext, bool) {

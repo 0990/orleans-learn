@@ -13,15 +13,15 @@ func NewGrainLocator() *GrainLocator {
 }
 
 func (gl *GrainLocator) Register(address IDs.GrainAddress) (IDs.GrainAddress, bool) {
-	result, ok := gl.addresses[address.GrainId()]
+	result, ok := gl.addresses[address.GrainId]
 	if ok {
 		return result, false
 	}
 
-	gl.addresses[address.GrainId()] = address
+	gl.addresses[address.GrainId] = address
 	return address, true
 }
 
 func (gl *GrainLocator) Unregister(address IDs.GrainAddress) {
-	delete(gl.addresses, address.GrainId())
+	delete(gl.addresses, address.GrainId)
 }

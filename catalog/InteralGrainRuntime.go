@@ -6,8 +6,9 @@ import (
 )
 
 type InternalGrainRuntime struct {
-	GrainLocator *GrainDirectory.GrainLocator
-	Catalog      *Catalog
+	GrainLocator  *GrainDirectory.GrainLocator
+	Catalog       *Catalog
+	MessageCenter *MessageCenter
 }
 
 //func (r *InternalGrainRuntime) GrainLocator() *GrainDirectory.GrainLocator {

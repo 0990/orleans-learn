@@ -1,25 +1,17 @@
 package IDs
 
 type GrainAddress struct {
-	_grainId      GrainId
-	_activationId ActivationId
+	GrainId      GrainId
+	ActivationId ActivationId
 }
 
 func NewGrainAddress(grainId GrainId, activationId ActivationId) GrainAddress {
 	return GrainAddress{
-		_grainId:      grainId,
-		_activationId: activationId,
+		GrainId:      grainId,
+		ActivationId: activationId,
 	}
 }
 
-func (ga *GrainAddress) GrainId() GrainId {
-	return ga._grainId
-}
-
-func (ga *GrainAddress) ActivationId() ActivationId {
-	return ga._activationId
-}
-
 func (ga *GrainAddress) Matches(other GrainAddress) bool {
-	return ga._grainId == other._grainId && ga._activationId == other._activationId
+	return ga.GrainId == other.GrainId && ga.ActivationId == other.ActivationId
 }
